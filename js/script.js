@@ -41,6 +41,44 @@ document.addEventListener('DOMContentLoaded', () => {
   // Hero star-trail now animates continuously via CSS (see .hero__trail path)
 
   // ---------------------------------------------------------
+  // Workshops announcement popup — temporary campaign
+  // Shows once per browser session, auto-retires after the
+  // last workshop's end date so it never shows stale info.
+  // ---------------------------------------------------------
+  const PROMO_CAMPAIGN_END = new Date('2026-09-06T00:00:00+03:00'); // day after last workshop ends
+  const PROMO_SESSION_KEY = 'sinagWorkshopsPromoSeen';
+
+  const promoBackdrop = document.getElementById('promoBackdrop');
+  if (promoBackdrop) {
+    const now = new Date();
+    const alreadySeen = sessionStorage.getItem(PROMO_SESSION_KEY);
+
+    if (now < PROMO_CAMPAIGN_END && !alreadySeen) {
+      const openPromo = () => {
+        promoBackdrop.hidden = false;
+        requestAnimationFrame(() => promoBackdrop.classList.add('is-visible'));
+        document.body.style.overflow = 'hidden';
+      };
+      const closePromo = () => {
+        promoBackdrop.classList.remove('is-visible');
+        document.body.style.overflow = '';
+        sessionStorage.setItem(PROMO_SESSION_KEY, '1');
+        setTimeout(() => { promoBackdrop.hidden = true; }, 350);
+      };
+
+      setTimeout(openPromo, 1200);
+
+      document.getElementById('promoClose')?.addEventListener('click', closePromo);
+      promoBackdrop.addEventListener('click', (e) => {
+        if (e.target === promoBackdrop) closePromo();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !promoBackdrop.hidden) closePromo();
+      });
+    }
+  }
+
+  // ---------------------------------------------------------
   // Hero star field — subtle, versatile twinkle, kept out of
   // the way of the logo/text for readability
   // ---------------------------------------------------------

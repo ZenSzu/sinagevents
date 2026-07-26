@@ -166,6 +166,7 @@ a:focus-visible, button:focus-visible{
 .status-pill.is-open .status-pill__dot{
   background:#39d353;
   box-shadow:0 0 8px #39d353;
+  animation:pulse-green 1.6s ease-in-out infinite;
 }
 .status-pill.is-open{ color:#8beb9d; border-color:rgba(57,211,83,.35); }
 
@@ -179,6 +180,10 @@ a:focus-visible, button:focus-visible{
 @keyframes pulse-red{
   0%,100%{ opacity:1; transform:scale(1); }
   50%{ opacity:.25; transform:scale(.7); }
+}
+@keyframes pulse-green{
+  0%,100%{ opacity:1; transform:scale(1); }
+  50%{ opacity:.4; transform:scale(.82); }
 }
 
 .status-pill--mobile{ margin-bottom:6px; }
@@ -734,4 +739,96 @@ a:focus-visible, button:focus-visible{
 
 @media (prefers-reduced-motion: reduce){
   *{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; scroll-behavior:auto !important; }
+}
+
+/* ============================================================
+   WORKSHOPS PROMO — temporary announcement popup
+   ============================================================ */
+.promo-backdrop{
+  position:fixed; inset:0; z-index:200;
+  display:flex; align-items:center; justify-content:center;
+  padding:24px;
+  background:rgba(6,5,4,.78);
+  backdrop-filter:blur(6px);
+  opacity:0;
+  transition:opacity .35s ease;
+}
+.promo-backdrop.is-visible{ opacity:1; }
+.promo-backdrop[hidden]{ display:none; }
+
+.promo-modal{
+  position:relative;
+  width:100%; max-width:560px;
+  max-height:88vh;
+  overflow-y:auto;
+  background:var(--black-panel);
+  border:1px solid var(--line-strong);
+  padding:44px 38px 36px;
+  transform:translateY(18px) scale(.98);
+  transition:transform .4s cubic-bezier(.2,.7,.2,1);
+  box-shadow:0 30px 80px rgba(0,0,0,.6);
+}
+.promo-backdrop.is-visible .promo-modal{ transform:translateY(0) scale(1); }
+
+.promo-modal__close{
+  position:absolute; top:16px; right:16px;
+  width:32px; height:32px;
+  background:none; border:1px solid var(--line);
+  color:var(--cream-dim);
+  font-size:13px; cursor:pointer;
+  transition:border-color .2s ease, color .2s ease;
+}
+.promo-modal__close:hover{ border-color:var(--gold-bright); color:var(--gold-bright); }
+
+.promo-modal__head{ text-align:left; margin-bottom:26px; }
+.promo-modal__eyebrow{ margin-bottom:14px; }
+.promo-modal__title{
+  font-family:var(--font-script);
+  font-weight:600;
+  font-size:clamp(26px, 4vw, 34px);
+  line-height:1.18;
+  color:var(--cream);
+}
+.promo-modal__title em{
+  font-style:italic;
+  background:var(--gold-grad);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.promo-modal__sub{
+  margin-top:12px; font-size:13.5px; color:var(--cream-dim); line-height:1.7;
+}
+
+.promo-list{ border-top:1px solid var(--line); }
+.promo-list li{
+  display:flex; flex-direction:column; gap:3px;
+  padding:14px 0;
+  border-bottom:1px solid var(--line);
+}
+.promo-list__name{ font-size:14px; color:var(--cream); letter-spacing:.01em; }
+.promo-list__meta{ font-size:11.5px; color:var(--gold-deep); letter-spacing:.02em; }
+
+.promo-modal__poster{
+  width:100%;
+  border:1px solid var(--line-strong);
+  margin-bottom:22px;
+}
+
+.promo-modal__location{
+  margin-top:18px;
+  font-size:11px; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--cream-dim); opacity:.7;
+}
+
+.promo-modal__actions{
+  margin-top:28px;
+  display:flex; gap:14px; flex-wrap:wrap;
+}
+.promo-modal__actions .btn{ cursor:pointer; }
+.promo-modal__actions .btn--ghost{ display:inline-flex; align-items:center; gap:9px; }
+.promo-modal__actions .btn--ghost img{ opacity:.85; }
+
+@media (max-width:560px){
+  .promo-modal{ padding:34px 22px 28px; max-height:92vh; }
+  .promo-modal__actions{ flex-direction:column; }
+  .promo-modal__actions .btn{ width:100%; justify-content:center; }
 }
