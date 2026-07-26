@@ -811,18 +811,23 @@ a:focus-visible, button:focus-visible{
 .footer__socials{ display:flex; gap:16px; }
 .footer__socials a:hover{ color:var(--gold-bright); }
 
-/* floating whatsapp */
-.float-wa{
+/* floating whatsapp — interactive two-number chooser */
+.float-wa-wrap{
   position:fixed; right:20px; bottom:20px; z-index:90;
+}
+.float-wa{
+  position:relative;
   width:56px; height:56px; border-radius:50%;
   background:var(--black-panel);
   border:1.5px solid var(--line-strong);
   display:flex; align-items:center; justify-content:center;
   box-shadow:0 10px 30px rgba(0,0,0,.55);
+  cursor:pointer;
   transition:transform .25s ease, border-color .25s ease;
 }
 .float-wa img{ width:28px; height:28px; }
 .float-wa:hover{ transform:scale(1.08); border-color:var(--gold-bright); }
+.float-wa[aria-expanded="true"]{ border-color:var(--gold-bright); }
 .float-wa__ping{
   position:absolute; inset:-1.5px; border-radius:50%;
   border:1.5px solid var(--gold-bright);
@@ -833,6 +838,41 @@ a:focus-visible, button:focus-visible{
   0%{ transform:scale(1); opacity:.55; }
   80%{ transform:scale(1.55); opacity:0; }
   100%{ opacity:0; }
+}
+
+.float-wa-menu{
+  position:absolute;
+  right:0; bottom:calc(100% + 14px);
+  min-width:210px;
+  background:var(--black-panel);
+  border:1px solid var(--line-strong);
+  box-shadow:0 20px 50px rgba(0,0,0,.5);
+  padding:8px;
+  opacity:0; visibility:hidden;
+  transform:translateY(8px);
+  transition:opacity .22s ease, transform .22s ease, visibility .22s;
+}
+.float-wa-menu.is-open{
+  opacity:1; visibility:visible; transform:translateY(0);
+}
+.float-wa-menu a{
+  display:flex; align-items:center; gap:10px;
+  padding:11px 12px;
+  font-size:13px; color:var(--cream);
+  white-space:nowrap;
+  border-radius:2px;
+  transition:background .2s ease, color .2s ease;
+}
+.float-wa-menu a:hover{ background:rgba(212,168,75,.1); color:var(--gold-bright); }
+.float-wa-menu a img{ width:16px; height:16px; flex:none; }
+.float-wa-menu::after{
+  content:'';
+  position:absolute; top:100%; right:20px;
+  width:10px; height:10px;
+  background:var(--black-panel);
+  border-right:1px solid var(--line-strong);
+  border-bottom:1px solid var(--line-strong);
+  transform:translateY(-50%) rotate(45deg);
 }
 
 /* ============================================================
@@ -870,7 +910,8 @@ a:focus-visible, button:focus-visible{
   .hero__tagline{ font-size:17px; }
   .contact__socials{ flex-wrap:wrap; }
   .hours__list li{ font-size:12.5px; }
-  .float-wa{ width:50px; height:50px; right:14px; bottom:14px; }
+  .float-wa-wrap{ right:14px; bottom:14px; }
+  .float-wa{ width:50px; height:50px; }
   .float-wa img{ width:24px; height:24px; }
   .footer__bottom{ align-items:flex-start; }
 }

@@ -242,6 +242,37 @@ document.addEventListener('DOMContentLoaded', () => {
   setInterval(updateAllStatus, 60 * 1000); // refresh every minute
 
   // ---------------------------------------------------------
+  // Floating WhatsApp button — opens a small menu to choose
+  // between the two contact numbers
+  // ---------------------------------------------------------
+  const floatWaToggle = document.getElementById('floatWaToggle');
+  const floatWaMenu = document.getElementById('floatWaMenu');
+  if (floatWaToggle && floatWaMenu) {
+    const closeWaMenu = () => {
+      floatWaMenu.classList.remove('is-open');
+      floatWaMenu.setAttribute('aria-hidden', 'true');
+      floatWaToggle.setAttribute('aria-expanded', 'false');
+    };
+    const openWaMenu = () => {
+      floatWaMenu.classList.add('is-open');
+      floatWaMenu.setAttribute('aria-hidden', 'false');
+      floatWaToggle.setAttribute('aria-expanded', 'true');
+    };
+
+    floatWaToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = floatWaMenu.classList.contains('is-open');
+      isOpen ? closeWaMenu() : openWaMenu();
+    });
+    document.addEventListener('click', (e) => {
+      if (!floatWaMenu.contains(e.target) && e.target !== floatWaToggle) closeWaMenu();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeWaMenu();
+    });
+  }
+
+  // ---------------------------------------------------------
   // Back to top
   // ---------------------------------------------------------
   const backToTop = document.getElementById('backToTop');

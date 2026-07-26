@@ -342,10 +342,22 @@
   <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4l7 7-1.4 1.4L13 7.8V20h-2V7.8l-4.6 4.6L5 11l7-7Z"/></svg>
 </button>
 
-<a href="https://wa.me/97433043148" class="float-wa" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
-  <img src="assets/icons/whatsapp.png" alt="" width="30" height="30" loading="lazy">
-  <span class="float-wa__ping" aria-hidden="true"></span>
-</a>
+<div class="float-wa-wrap">
+  <div class="float-wa-menu" id="floatWaMenu" role="menu" aria-hidden="true">
+    <a href="https://wa.me/97433043148" target="_blank" rel="noopener" role="menuitem">
+      <img src="assets/icons/whatsapp.png" alt="" width="16" height="16">
+      <span>+974 3304 3148</span>
+    </a>
+    <a href="https://wa.me/97466078911" target="_blank" rel="noopener" role="menuitem">
+      <img src="assets/icons/whatsapp.png" alt="" width="16" height="16">
+      <span>+974 6607 8911</span>
+    </a>
+  </div>
+  <button type="button" class="float-wa" id="floatWaToggle" aria-label="Chat on WhatsApp" aria-haspopup="true" aria-expanded="false">
+    <img src="assets/icons/whatsapp.png" alt="" width="30" height="30" loading="lazy">
+    <span class="float-wa__ping" aria-hidden="true"></span>
+  </button>
+</div>
 
 <!-- ============ WORKSHOPS ANNOUNCEMENT (temporary popup) ============ -->
 <div class="promo-backdrop js-campaign-only" id="promoBackdrop" hidden>
@@ -404,7 +416,11 @@
       <a href="https://docs.google.com/forms/d/e/1FAIpQLSc-1vV7N0PHXBQpoOtuFg1795bMgcHtctrHYakaLnl0Bbj46A/viewform?usp=header" target="_blank" rel="noopener" class="btn btn--gold">Fill up the form</a>
       <a href="https://wa.me/97433043148?text=Hi!%20I%27d%20like%20to%20join%20a%20Sinag%20workshop." target="_blank" rel="noopener" class="btn btn--ghost">
         <img src="assets/icons/whatsapp.png" alt="" width="16" height="16">
-        Or WhatsApp +974 3304 3148
+        WhatsApp +974 3304 3148
+      </a>
+      <a href="https://wa.me/97466078911?text=Hi!%20I%27d%20like%20to%20join%20a%20Sinag%20workshop." target="_blank" rel="noopener" class="btn btn--ghost">
+        <img src="assets/icons/whatsapp.png" alt="" width="16" height="16">
+        WhatsApp +974 6607 8911
       </a>
     </div>
   </div>
