@@ -41,41 +41,56 @@ document.addEventListener('DOMContentLoaded', () => {
   // Hero star-trail now animates continuously via CSS (see .hero__trail path)
 
   // ---------------------------------------------------------
-  // Workshops announcement popup — temporary campaign
-  // Shows once per browser session, auto-retires after the
-  // last workshop's end date so it never shows stale info.
+  // Workshops announcement — temporary campaign
+  // Popup auto-opens once per browser session; the "Workshops"
+  // nav link and homepage banner let people reopen it (or read
+  // the schedule directly) any time, even after they close it.
+  // Everything tagged .js-campaign-only disappears on its own
+  // once the last workshop's end date passes.
   // ---------------------------------------------------------
   const PROMO_CAMPAIGN_END = new Date('2026-09-06T00:00:00+03:00'); // day after last workshop ends
   const PROMO_SESSION_KEY = 'sinagWorkshopsPromoSeen';
+  const campaignActive = new Date() < PROMO_CAMPAIGN_END;
 
   const promoBackdrop = document.getElementById('promoBackdrop');
   if (promoBackdrop) {
-    const now = new Date();
-    const alreadySeen = sessionStorage.getItem(PROMO_SESSION_KEY);
+    const openPromo = () => {
+      promoBackdrop.hidden = false;
+      requestAnimationFrame(() => promoBackdrop.classList.add('is-visible'));
+      document.body.style.overflow = 'hidden';
+    };
+    const closePromo = () => {
+      promoBackdrop.classList.remove('is-visible');
+      document.body.style.overflow = '';
+      sessionStorage.setItem(PROMO_SESSION_KEY, '1');
+      setTimeout(() => { promoBackdrop.hidden = true; }, 350);
+    };
 
-    if (now < PROMO_CAMPAIGN_END && !alreadySeen) {
-      const openPromo = () => {
-        promoBackdrop.hidden = false;
-        requestAnimationFrame(() => promoBackdrop.classList.add('is-visible'));
-        document.body.style.overflow = 'hidden';
-      };
-      const closePromo = () => {
-        promoBackdrop.classList.remove('is-visible');
-        document.body.style.overflow = '';
-        sessionStorage.setItem(PROMO_SESSION_KEY, '1');
-        setTimeout(() => { promoBackdrop.hidden = true; }, 350);
-      };
-
+    if (campaignActive && !sessionStorage.getItem(PROMO_SESSION_KEY)) {
       setTimeout(openPromo, 1200);
-
-      document.getElementById('promoClose')?.addEventListener('click', closePromo);
-      promoBackdrop.addEventListener('click', (e) => {
-        if (e.target === promoBackdrop) closePromo();
-      });
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && !promoBackdrop.hidden) closePromo();
-      });
     }
+
+    document.getElementById('promoClose')?.addEventListener('click', closePromo);
+    promoBackdrop.addEventListener('click', (e) => {
+      if (e.target === promoBackdrop) closePromo();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !promoBackdrop.hidden) closePromo();
+    });
+
+    // Any element with data-open-promo reopens the same modal on demand
+    document.querySelectorAll('[data-open-promo]').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        openPromo();
+      });
+    });
+  }
+
+  // Once the campaign window passes, quietly remove every
+  // campaign-only element (nav link, homepage banner, popup)
+  if (!campaignActive) {
+    document.querySelectorAll('.js-campaign-only').forEach((el) => el.remove());
   }
 
   // ---------------------------------------------------------
@@ -225,6 +240,47 @@ document.addEventListener('DOMContentLoaded', () => {
 
   updateAllStatus();
   setInterval(updateAllStatus, 60 * 1000); // refresh every minute
+
+  // ---------------------------------------------------------
+  // Back to top
+  // ---------------------------------------------------------
+  const backToTop = document.getElementById('backToTop');
+  if (backToTop) {
+    backToTop.hidden = false; // let CSS opacity/transform handle visibility
+    window.addEventListener('scroll', () => {
+      backToTop.classList.toggle('is-visible', window.scrollY > 700);
+    }, { passive: true });
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  // ---------------------------------------------------------
+  // Hero cursor sparkle trail — small gold stars that follow
+  // the pointer through the hero, desktop only, very light touch
+  // ---------------------------------------------------------
+  const heroSection = document.querySelector('.hero');
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isFinePointer = window.matchMedia('(pointer: fine)').matches;
+
+  if (heroSection && isFinePointer && !prefersReducedMotion) {
+    let lastSpark = 0;
+    heroSection.addEventListener('mousemove', (e) => {
+      const now = Date.now();
+      if (now - lastSpark < 70) return; // throttle so it stays subtle, not a firehose
+      lastSpark = now;
+
+      const sparkle = document.createElement('span');
+      sparkle.className = 'sparkle';
+      sparkle.style.left = `${e.clientX}px`;
+      sparkle.style.top = `${e.clientY}px`;
+      const size = 3 + Math.random() * 4;
+      sparkle.style.width = `${size}px`;
+      sparkle.style.height = `${size}px`;
+      document.body.appendChild(sparkle);
+      setTimeout(() => sparkle.remove(), 950);
+    });
+  }
 
   // Slim the nav bar shadow after scrolling
   const nav = document.getElementById('nav');

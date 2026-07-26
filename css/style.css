@@ -420,6 +420,129 @@ a:focus-visible, button:focus-visible{
 .events__inner .btn{ margin-top:44px; }
 
 /* ============================================================
+   BACK TO TOP
+   ============================================================ */
+.back-to-top{
+  position:fixed; right:20px; bottom:86px; z-index:89;
+  width:44px; height:44px;
+  background:var(--black-panel);
+  border:1px solid var(--line-strong);
+  border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer;
+  opacity:0; transform:translateY(10px);
+  pointer-events:none;
+  transition:opacity .3s ease, transform .3s ease, border-color .25s ease, background .25s ease;
+}
+.back-to-top.is-visible{ opacity:1; transform:translateY(0); pointer-events:auto; }
+.back-to-top[hidden]{ display:flex; } /* overridden by JS toggling opacity, keep in flow for transition */
+.back-to-top svg{ width:18px; height:18px; fill:var(--gold-bright); }
+.back-to-top:hover{ border-color:var(--gold-bright); background:var(--black); }
+
+@media (max-width:520px){
+  .back-to-top{ right:14px; bottom:76px; width:40px; height:40px; }
+}
+
+/* ============================================================
+   CURSOR SPARKLE TRAIL — hero only, desktop pointer devices
+   ============================================================ */
+.sparkle{
+  position:fixed;
+  z-index:5;
+  pointer-events:none;
+  width:5px; height:5px;
+  background:var(--gold-light);
+  clip-path:polygon(50% 0%, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0% 50%, 39% 39%);
+  opacity:.85;
+  animation:sparkle-fade .9s ease-out forwards;
+}
+@keyframes sparkle-fade{
+  0%{ opacity:.85; transform:translate(-50%,-50%) scale(1) translateY(0); }
+  100%{ opacity:0; transform:translate(-50%,-50%) scale(.3) translateY(-18px); }
+}
+
+/* ============================================================
+   WORKSHOPS SIDE TAB — persistent, always-findable entry point
+   ============================================================ */
+.workshops-tab{
+  position:fixed;
+  left:0; top:50%;
+  transform:translateY(-50%);
+  z-index:95;
+  writing-mode:vertical-rl;
+  text-orientation:mixed;
+  display:flex; align-items:center; gap:9px;
+  background:var(--gold-grad);
+  background-size:200% 200%;
+  color:var(--black);
+  font-family:var(--font-mono);
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  padding:22px 8px 22px 9px;
+  border:none;
+  border-radius:0 8px 8px 0;
+  cursor:pointer;
+  box-shadow:5px 0 24px rgba(0,0,0,.45);
+  transition:padding .3s ease, box-shadow .3s ease, background-position .5s ease;
+}
+.workshops-tab:hover{
+  padding-right:14px;
+  box-shadow:7px 0 30px rgba(0,0,0,.55);
+  background-position:100% 0;
+}
+.workshops-tab__dot{
+  width:6px; height:6px; border-radius:50%; flex:none;
+  background:var(--black);
+  opacity:.55;
+  animation:workshops-tab-blink 1.8s ease-in-out infinite;
+}
+@keyframes workshops-tab-blink{
+  0%,100%{ opacity:.55; }
+  50%{ opacity:.15; }
+}
+
+@media (max-width:640px){
+  .workshops-tab{
+    font-size:10px;
+    padding:16px 6px 16px 7px;
+  }
+}
+.workshops-banner{
+  padding:110px var(--edge);
+  background:var(--black-panel);
+  border-bottom:1px solid var(--line);
+}
+.workshops-banner__inner{
+  max-width:var(--maxw); margin:0 auto;
+  display:grid; grid-template-columns:.78fr 1.22fr; gap:64px; align-items:center;
+}
+.workshops-banner__poster{
+  border:1px solid var(--line-strong);
+  overflow:hidden;
+  align-self:start;
+}
+.workshops-banner__poster img{ width:100%; display:block; }
+.workshops-banner__text{
+  margin-top:18px; color:var(--cream-dim); font-size:14px; line-height:1.85; max-width:58ch;
+}
+.workshops-banner__actions{
+  margin-top:32px; display:flex; gap:16px; flex-wrap:wrap;
+}
+.workshops-banner__actions .btn{ cursor:pointer; border:1px solid transparent; }
+
+@media (max-width:860px){
+  .workshops-banner__inner{ grid-template-columns:1fr; gap:36px; }
+  .workshops-banner__poster{ max-width:340px; margin:0 auto; }
+}
+@media (max-width:520px){
+  .workshops-banner{ padding:70px var(--edge); }
+  .workshops-banner__actions{ flex-direction:column; }
+  .workshops-banner__actions .btn{ width:100%; justify-content:center; }
+}
+
+/* ============================================================
    BOOKING FORM
    ============================================================ */
 .booking-form{ max-width:560px; }
@@ -479,6 +602,19 @@ a:focus-visible, button:focus-visible{
 }
 .nav__links a.is-current{ color:var(--gold-bright); }
 .nav__links a.is-current .nav__num{ color:var(--gold-bright); }
+
+.nav__workshops{
+  display:flex; align-items:center; gap:7px;
+  color:var(--gold-bright) !important;
+  font-weight:700;
+  cursor:pointer;
+}
+.nav__workshops-dot{
+  width:6px; height:6px; border-radius:50%; flex:none;
+  background:var(--gold-bright);
+  box-shadow:0 0 6px var(--gold-bright);
+  animation:pulse-green 1.6s ease-in-out infinite;
+}
 
 /* ============================================================
    SECONDARY PAGE HERO (Team, etc.)
@@ -607,14 +743,21 @@ a:focus-visible, button:focus-visible{
 .contact__value{ color:var(--cream-dim); font-size:14px; line-height:1.8; }
 
 .contact__whatsapp{
-  display:inline-flex; align-items:center; gap:10px;
+  display:flex; width:fit-content; align-items:center; gap:10px;
   font-size:16px; color:var(--gold-bright);
   border-bottom:1px solid var(--line-strong);
   padding-bottom:4px;
   transition:color .25s ease, border-color .25s ease, gap .25s ease;
 }
 .contact__whatsapp:hover{ color:var(--gold-light); border-color:var(--gold-light); gap:14px; }
-.contact__hint{ margin-top:8px; font-size:11px; color:var(--cream-dim); opacity:.7; }
+.contact__whatsapp + .contact__whatsapp{ margin-top:12px; }
+.contact__whatsapp--secondary{
+  font-size:14px;
+  color:var(--cream-dim);
+  border-color:var(--line);
+}
+.contact__whatsapp--secondary:hover{ color:var(--gold-bright); border-color:var(--gold-bright); }
+.contact__hint{ margin-top:10px; font-size:11px; color:var(--cream-dim); opacity:.7; }
 
 .contact__socials{ display:flex; gap:16px; }
 .social{

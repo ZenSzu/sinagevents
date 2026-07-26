@@ -30,6 +30,7 @@
     <a href="#services"><span class="nav__num">02</span>Services</a>
     <a href="team.html"><span class="nav__num">03</span>Team</a>
     <a href="#events"><span class="nav__num">04</span>Events</a>
+    <a href="#workshops" class="nav__workshops js-campaign-only" data-open-promo>Workshops <span class="nav__workshops-dot"></span></a>
     <a href="#booking"><span class="nav__num">05</span>Booking</a>
     <a href="#contact"><span class="nav__num">06</span>Contact</a>
   </nav>
@@ -55,6 +56,7 @@
   <a href="#services">Services</a>
   <a href="team.html">Team</a>
   <a href="#events">Events</a>
+  <a href="#workshops" class="js-campaign-only" data-open-promo>Workshops ✦</a>
   <a href="#booking">Booking</a>
   <a href="#contact">Contact</a>
   <a href="https://wa.me/97433043148" target="_blank" rel="noopener" class="mobile-menu__cta">WhatsApp Us</a>
@@ -138,6 +140,26 @@
       Every detail is handled with precision — ensuring your event or project runs seamlessly while leaving a lasting impression.
     </p>
     <a href="https://wa.me/97433043148" class="btn btn--gold" target="_blank" rel="noopener">Plan your event</a>
+  </div>
+</section>
+
+<!-- ============ WORKSHOPS BANNER (persistent, temporary campaign) ============ -->
+<section class="workshops-banner js-campaign-only" id="workshops">
+  <div class="workshops-banner__inner">
+    <div class="workshops-banner__poster">
+      <img src="assets/workshops-poster.jpg" alt="Sinag Workshops — Acting, Ballroom, Building a Band, Charcoal, Acrylic, Hip Hop, Fashion Camp, and Hosting workshops running through August at Tala Digital Media Studios, Doha." loading="lazy">
+    </div>
+    <div class="workshops-banner__body">
+      <p class="eyebrow"><span class="dot"></span>Now enrolling</p>
+      <h2 class="h2">Sinag Workshops<br><em>are open.</em></h2>
+      <p class="workshops-banner__text">
+        Eight tracks running through August — acting, ballroom, band, charcoal, acrylic, hip hop, fashion camp, and hosting — with real coaches at the studio.
+      </p>
+      <div class="workshops-banner__actions">
+        <button type="button" class="btn btn--gold" data-open-promo>See full schedule</button>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSc-1vV7N0PHXBQpoOtuFg1795bMgcHtctrHYakaLnl0Bbj46A/viewform?usp=header" target="_blank" rel="noopener" class="btn btn--ghost">Fill up the form</a>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -231,7 +253,11 @@
           <img src="assets/icons/whatsapp.png" alt="" class="icon icon--brand" width="22" height="22" loading="lazy">
           <span>+974 3304 3148</span>
         </a>
-        <p class="contact__hint">Tap to chat with us on WhatsApp</p>
+        <a href="https://wa.me/97466078911" target="_blank" rel="noopener" class="contact__whatsapp contact__whatsapp--secondary">
+          <img src="assets/icons/whatsapp.png" alt="" class="icon icon--brand" width="22" height="22" loading="lazy">
+          <span>+974 6607 8911</span>
+        </a>
+        <p class="contact__hint">Tap either number to chat with us on WhatsApp</p>
       </div>
 
       <div class="contact__block">
@@ -307,13 +333,22 @@
   </div>
 </footer>
 
+<button type="button" class="workshops-tab js-campaign-only" id="workshopsTab" data-open-promo aria-label="Workshops now open — view schedule">
+  <span class="workshops-tab__dot"></span>
+  <span>Workshops&nbsp;Open</span>
+</button>
+
+<button type="button" class="back-to-top" id="backToTop" aria-label="Back to top" hidden>
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4l7 7-1.4 1.4L13 7.8V20h-2V7.8l-4.6 4.6L5 11l7-7Z"/></svg>
+</button>
+
 <a href="https://wa.me/97433043148" class="float-wa" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
   <img src="assets/icons/whatsapp.png" alt="" width="30" height="30" loading="lazy">
   <span class="float-wa__ping" aria-hidden="true"></span>
 </a>
 
 <!-- ============ WORKSHOPS ANNOUNCEMENT (temporary popup) ============ -->
-<div class="promo-backdrop" id="promoBackdrop" hidden>
+<div class="promo-backdrop js-campaign-only" id="promoBackdrop" hidden>
   <div class="promo-modal" role="dialog" aria-modal="true" aria-label="Sinag Workshops announcement">
     <button class="promo-modal__close" id="promoClose" aria-label="Close announcement">✕</button>
 
