@@ -112,9 +112,15 @@ a:focus-visible, button:focus-visible{
   font-style:italic;
   font-weight:600;
   background:var(--gold-grad);
+  background-size:260% auto;
   -webkit-background-clip:text;
   background-clip:text;
   color:transparent;
+  animation:gold-foil-shimmer 7s linear infinite;
+}
+@keyframes gold-foil-shimmer{
+  0%{ background-position:0% 50%; }
+  100%{ background-position:200% 50%; }
 }
 
 /* ============================================================
@@ -301,7 +307,15 @@ a:focus-visible, button:focus-visible{
   line-height:1.5;
   margin-top:6px;
 }
-.hero__tagline em{ color:var(--gold-bright); font-style:italic; }
+.hero__tagline em{
+  font-style:italic;
+  background:var(--gold-grad);
+  background-size:260% auto;
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  animation:gold-foil-shimmer 7s linear infinite;
+}
 
 .hero__actions{
   margin-top:44px;
@@ -407,8 +421,10 @@ a:focus-visible, button:focus-visible{
 }
 .events__quote strong{
   background:var(--gold-grad);
+  background-size:260% auto;
   -webkit-background-clip:text; background-clip:text; color:transparent;
   font-style:normal; font-weight:700;
+  animation:gold-foil-shimmer 7s linear infinite;
 }
 .events__body{
   margin-top:26px;
@@ -636,7 +652,9 @@ a:focus-visible, button:focus-visible{
 .page-hero__title em{
   font-style:italic;
   background:var(--gold-grad);
+  background-size:260% auto;
   -webkit-background-clip:text; background-clip:text; color:transparent;
+  animation:gold-foil-shimmer 7s linear infinite;
 }
 .page-hero__lead{
   margin-top:22px;
