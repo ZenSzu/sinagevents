@@ -242,6 +242,44 @@ document.addEventListener('DOMContentLoaded', () => {
   setInterval(updateAllStatus, 60 * 1000); // refresh every minute
 
   // ---------------------------------------------------------
+  // Live countdown — first workshop sessions begin Aug 1, 2026
+  // (Doha time). Switches to a "running now" state once passed.
+  // ---------------------------------------------------------
+  const WORKSHOPS_START = new Date('2026-08-01T00:00:00+03:00');
+  const countdownEl = document.getElementById('workshopsCountdown');
+
+  if (countdownEl) {
+    const labelEl = document.getElementById('workshopsCountdownLabel');
+    const digitsEl = document.getElementById('workshopsCountdownDigits');
+    const dDays = document.getElementById('cdDays');
+    const dHours = document.getElementById('cdHours');
+    const dMinutes = document.getElementById('cdMinutes');
+
+    const tickCountdown = () => {
+      const diff = WORKSHOPS_START - new Date();
+
+      if (diff <= 0) {
+        countdownEl.classList.add('is-live');
+        labelEl.textContent = 'Sessions are running now';
+        if (digitsEl) digitsEl.hidden = true;
+        return;
+      }
+
+      const totalMinutes = Math.floor(diff / 60000);
+      const days = Math.floor(totalMinutes / 1440);
+      const hours = Math.floor((totalMinutes % 1440) / 60);
+      const minutes = totalMinutes % 60;
+
+      dDays.textContent = String(days);
+      dHours.textContent = String(hours).padStart(2, '0');
+      dMinutes.textContent = String(minutes).padStart(2, '0');
+    };
+
+    tickCountdown();
+    setInterval(tickCountdown, 60 * 1000);
+  }
+
+  // ---------------------------------------------------------
   // Floating WhatsApp button — opens a small menu to choose
   // between the two contact numbers
   // ---------------------------------------------------------

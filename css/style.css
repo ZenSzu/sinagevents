@@ -548,6 +548,45 @@ a:focus-visible, button:focus-visible{
 }
 .workshops-banner__actions .btn{ cursor:pointer; border:1px solid transparent; }
 
+/* live countdown to the first workshop sessions */
+.workshops-countdown{
+  margin-top:28px;
+  display:flex; align-items:center; gap:18px; flex-wrap:wrap;
+}
+.workshops-countdown__label{
+  font-size:10.5px; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--cream-dim);
+}
+.workshops-countdown__digits{ display:flex; gap:10px; }
+.workshops-countdown__unit{
+  display:flex; flex-direction:column; align-items:center;
+  min-width:52px;
+  padding:9px 4px 7px;
+  border:1px solid var(--line-strong);
+  background:var(--black);
+}
+.workshops-countdown__num{
+  font-family:var(--font-mono);
+  font-weight:700;
+  font-size:19px;
+  color:var(--gold-bright);
+  line-height:1;
+  font-variant-numeric:tabular-nums;
+}
+.workshops-countdown__tag{
+  margin-top:5px;
+  font-size:9px; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--cream-dim); opacity:.65;
+}
+.workshops-countdown.is-live .workshops-countdown__num{ color:#8beb9d; }
+.workshops-countdown.is-live .workshops-countdown__unit{ border-color:rgba(57,211,83,.35); }
+
+@media (max-width:520px){
+  .workshops-countdown{ gap:12px; }
+  .workshops-countdown__unit{ min-width:46px; padding:7px 2px 6px; }
+  .workshops-countdown__num{ font-size:16px; }
+}
+
 @media (max-width:860px){
   .workshops-banner__inner{ grid-template-columns:1fr; gap:36px; }
   .workshops-banner__poster{ max-width:340px; margin:0 auto; }
